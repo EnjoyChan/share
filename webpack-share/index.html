@@ -1,0 +1,174 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Something about webpack -- Enjoy Chan</title>
+        <link rel="stylesheet" href="../reveal.js/css/reveal.css">
+        <link rel="stylesheet" href="../reveal.js/css/theme/league.css">
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                  <h3><mark>something about 'webpack'</mark></h3>
+                  <h4>Enjoy Chan<span>(平台前端)</span></h4>
+                </section>
+                <section>
+                  <section>
+                    <h4>一张图概括webpack是做什么的</h4>
+                    <img src="./pics/webpack_pic.png"/>
+                    <p class="fragment">基于node</p>
+                    <p class="fragment">每个文件都是一个module</p>
+                  </section>
+                  <section>
+                    <h4>Advantages</h4>
+                    <ul>
+                      <li>loaders</li>
+                      <li>plugins</li>
+                      <li>code spliting</li>
+                      <li>js module: support AMD/Commonjs</li>
+                    </ul>
+                    <p class="fragment">
+                      compare with gulp/grunt?
+                    </p>
+                  </section>
+                </section>
+                <section>
+                  <h3 class="highlight-blue">JS Module</h3>
+                  <section>
+                    <h5>server: Nodejs -- Commonjs</h5>
+                    <p>npm、node_modules、package.json</p>
+                    <p>require、module.exports、exports</p>
+                    <pre>
+                      <code data-trim>
+                        var $ = require('jquery');
+                        module.exports = {
+                          name: 'enjoy',
+                          value: 'yourselves'
+                        };
+                      </code>
+                    </pre>
+                  </section>
+                  <section>
+                    <h5>browser: seajs(CMD)、requirejs(AMD)</h5>
+                    <p> define、module.exports、exports、require、return</p>
+                    <p>seajs.use()</p>
+                    <pre>
+                      <code data-trim>
+                        define(function(){
+                          var $ = require('jquery');
+
+                          module.exports = {
+                            name: 'enjoy',
+                            value: 'yourselves'
+                          };
+                        })
+                      </code>
+                    </pre>
+                  </section>
+                  <section>
+                    webpack supports both, means:
+                    <ul>
+                      <li> 你可以选择你喜欢的js模块规范写模块js</li>
+                      <li>可以兼容已有的模块方案, 平滑过渡</li>
+                    </ul>
+                  </section>
+                </section>
+                <section>
+                  <section>
+                    <h4>webpack操作</h4>
+                    <ul>
+                      <li>命令行方式，默认读取`webpack.config.js`</li>
+                      <li>nodejs api</li>
+                    </ul>
+                  </section>
+                  <section>
+                    <pre>
+                      <code>
+                        //webpack.config.js
+                        module.exports = {
+                          entry: './main-entry.js',
+                          output: {
+                            path: __dirname + './dist.js',
+                            filename: 'bundle.js'
+                          }
+                        }
+                      </code>
+                    </pre>
+                    <p>cmd: webpack</p>
+                  </section>
+                  <section>
+                    <pre>
+                      <code>
+                        //nodejs api
+                        var webpack = require('webpack');
+                        webpack({
+                          entry: './main-entry.js',
+
+                          output: {
+                            path: __dirname + './dist.js',
+                            filename: 'bundle.js'
+                          }
+                        }, calllback)
+                      </code>
+                    </pre>
+                  </section>
+                </section>
+                <section>
+                  <h4>loaders and plugins</h4>
+                  <section>
+                    <p>loaders: run in node.js</p>
+                    <p>针对modules</p>
+                    <ul>
+                      <li>(*.coffee | *.jsx | *.es6.js ...) -> *.js</li>
+                      <li>(*.tpl | *.handlebars...) -> *.js</li>
+                      <li>...</li>
+                    </ul>
+                    <p class="fragment">what u need to do is : install right loaders to handle right modules</p>
+                  </section>
+                  <section>
+                    <p>plugins: 针对bundles</p>
+                    <ul>
+                      <li>new webpack.optimize.CommonsChunkPlugin(options)</li>
+                      <li>new webpack.optimize.UglifyJsPlugin([options])</li>
+                      <li>...</li>
+                    </ul>
+                  </section>
+                </section>
+                <section>
+                  <h4>code spliting</h4>
+                  <p>按需加载代码</p>
+                  <ul>
+                    <li>Commonjs:  require.ensure([], function(require){
+
+                    })</li>
+                    <li>Amd:  require([], function({
+
+                    }))</li>
+                  </ul>
+                  <p class="fragment">see example~</p>
+                </section>
+                <section>
+                  <h4>看看oa的项目～</h4>
+                </section>
+                <section>
+                  <h4>in a word</h4>
+                  <p>webpack能帮助我们什么？</p>
+                  <ul>
+                    <li>替换seajs的模块方案，再也不用seajs.use和define</li>
+                    <li>帮助我们分离文件为module, 更好的维护</li>
+                    <li>如果是SPA(单页面应用)，code spliting可以提高性能</li>
+                    <li class="fragment">find the answer by yourself...</li>
+                  </ul>
+                </section>
+                <section>
+                  <p>My last word</p>
+                  <p>enjoy it!</p>
+                </section>
+            </div>
+        </div>
+        <script src="../reveal.js/js/reveal.js"></script>
+        <script>
+            Reveal.initialize(); 
+        </script>
+    </body>
+</html>
