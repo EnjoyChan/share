@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Function Program</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../revealjs/css/reveal.css">
+		<link rel="stylesheet" href="../revealjs/css/theme/blood.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../revealjs/lib/css/zenburn.css">
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<!--  page 1-->
+				<section>
+					<h3>Functional Programing</h3>
+					<h4>函数式编程</h4>
+					<p>
+						Enjoy Chan(平台前端)
+					</p>
+				</section>
+
+				<section>
+					<h4>play a game</h4>
+				</section>
+
+				<section>
+					<section>
+						<h3>OOP：面向对象编程</h3>
+					</section>
+					<section>
+						<p>js面向对象编程</p>
+						<ol>
+							<li>构造函数</li>
+							<li>原型链</li>
+							<li>prototype</li>
+							<li>this</li>
+							<li>类、方法</li>
+							<li>new</li>
+						</ol>
+						<div class="fragment">see an example ⬇️</div>
+					</section>
+					<section>
+						<h4>js 继承</h4>
+						<p>类: extend</p>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+function Animal(name) {
+	this.name = name;//属性
+}
+
+function Dog(name, color) {
+	Animal.call(this, name);//call
+	this.color = color;
+}
+
+Dog.prototype = {//方法
+	getColor: function() {
+		return this.color;
+	},
+	getName: function() {
+		return this.name
+	}
+}
+
+dog = new Dog();//new instanceof Dog, not instance of Animal
+							</code>
+						</pre>
+					</section>
+					<section>
+						<p>原型链：inherit</p>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+function Animal() {
+}
+
+Animal.prototype.getName = function() {
+	return this.name;
+}
+
+function Dog(name, color) {
+	this.name = name;
+	this.color = color;
+}
+Dog.prototype = new Animal();
+Dog.prototype.constructor = Dog;
+
+dog = new Dog();
+							</code>
+						</pre>
+						<p class="fragment zoom">增添需求： 动物叫声？</p>
+					</section>
+					<section>
+						<p>重写对象的属性和方法</p>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+Animal.prototype.bark = function() {
+
+}
+
+Dog.prototype.bark = function() {
+
+}
+
+//jquery
+$.fn.bark = function() {
+
+}
+
+							</code>
+						</pre>
+					</section>
+					<section>
+						<ol>
+							<li class="fragment">每次修改，通过版本来迭代</li>
+							<li class="fragment">实例化后，只使用其中部分方法</li>
+							<li class="fragment">'this' comfusion</li>
+						</ol>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3>FP：函数式编程</h3>
+					</section>
+					<section>
+						<h4>常见 JS 函数库</h4>
+						<ol>
+							<li><a href="http://underscorejs.org">underscore.js</a></li>
+							<li><a href="https://lodash.com/">lodash.js</a></li>
+							<li><a href="http://">lazy.js</a></li>
+						</ol>
+
+					</section>
+					<section>
+						<h4><a href="https://en.wikipedia.org/wiki/Lambda_calculus">lambda calculus</a>: lambda 表达式</h4>
+						<p>heart: mathematical logic</p>
+						<blockquote cite="https://en.wikipedia.org/wiki/Lambda_calculus">
+							Lambda calculus (also written as λ-calculus) is a formal system in mathematical logic for expressing computation based on function abstraction and application using variable binding and substitution
+						</blockquote>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h4>Pure Functions: 纯函数</h4>
+					</section>
+					<section>
+						<blockquote>
+							programs: transformations of data
+						</blockquote>
+						<img class="fragment zoom" src="./pics/p.jpg" alt="程序">
+					</section>
+					<section>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+const x = 10;
+
+func1 = (a) => a + x;
+
+func2 = (a) => a + 10;
+							</code>
+						</pre>
+						<p class="fragment">纯函数：仅仅依赖于函数的输入，并且当输入相同时输出保持一致。</p>
+						<p class="fragment">side-effect free: 无副作用</p>
+					</section>
+					<section>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+var data = {},
+    arr = [1, 2, 3];
+
+//es5
+arr.forEach(function(item) {
+	data[item] = item;
+})
+
+//lodash || underscore
+_.each(arr, function() {
+	data[item] = item;
+})
+							</code>
+						</pre>
+					</section>
+					<section>
+						<p>Advantages</p>
+						<ul>
+							<li>仅仅需要关注函数体本身, 便于调试</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h4>Function Composition: 函数组合</h4>
+					</section>
+					<section>
+						<p>unix pipe `|`</p>
+						<p>获取对象的id值</p>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+//数据流从左到右
+data | getID('result_rows') | getID('id')
+							</code>
+						</pre>
+					</section>
+					<section>
+						<p>
+							Lambda运算：compose
+						</p>
+						<p>functional pipelines</p>
+						<pre class="fragment">
+							<code class="hljs" data-trim contenteditable>
+//数据流从右到左
+compose(getID('id'), getID('result_rows'));
+							</code>
+						</pre>
+						<pre class="fragment">
+							<code class="hljs" data-trim contenteditable>
+//@fns: array, [fn, fn,...]
+const pipe = (fns) => (x) => fns.reduce((v, fn) => fn(v), x);
+
+pipe([getID('result_rows'), getID('id')]);
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h5>example</h5>
+						<p>假设现在有个需求</p>
+						<ol>
+							<li>输出‘欢迎某某’</li>
+							<li class="fragment">根据性别输出‘欢迎某某女士／先生’</li>
+							<li class="fragment">根据早上、中午、晚上输出‘早上好， 某某女士’......</li>
+						</ol>
+
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+const welcome = (name) => `welcome ${name}`;
+							</code>
+						</pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h4>Function Currying: 函数柯里化</h4>
+					</section>
+					<section>
+						<p>js 函数调用</p>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+const add = (x, y) => return x + y;
+add(1, 2); //= 3
+add(1); //= NaN
+add(1, 2, 3);//= 3
+							</code>
+						</pre>
+						<pre class="fragment">
+							<code class="hljs" data-trim contenteditable>
+const curry = require('curry');
+const add = curry((x, y) => x + y);
+const add100 = add(100);
+add100(1); //= 101
+add(1, 2);//= 3
+add(1)(2);//=3
+add(1, 2, 3);//=3
+							</code>
+						</pre>
+						<ul class="fragment">
+							<li>当参数个数少于函数既定参数个数时返回另一个function</li>
+							<li>当参数大于等于函数既定参数个数时直接执行function</li>
+						</ul>
+					</section>
+					<section>
+						<h5>适用于map、compose 、pipe等</h5>
+						<p>可配置，提高代码复用率</p>
+						<pre class="fragment">
+							<code class="hljs" data-trim contenteditable>
+//返回数据的id
+const data = [{id: 1},{id: 2}, {id: 3}];
+data.map((item) => item.id);//= [1, 2, 3]
+							</code>
+						</pre>
+						<pre class="fragment">
+							<code class="hljs" data-trim contenteditable>
+//返回数据的id
+const getID = Curry((property, object) => object[property]);
+data.map(getID('id'));//= [1, 2, 3]
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h5>链式调用: elegant</h5>
+						<p class="frament">ajax请求获取id</p>
+						<pre class="fragment">
+							<code class="hljs" data-trim contenteditable>
+//result_rows = {products: [{id: 1}, {id: 2}]};
+$.ajax({
+	url: '/server.json',
+})
+.then(function(result){
+	return result.result_rows;
+})
+.then(function(data) {
+	var ids = data.products.map(function(product){//= [1, 2]
+		return product.id;
+	});
+})
+							</code>
+						</pre>
+					</section>
+					<section>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+//result_rows = {products: [{id: 1}, {id: 2}]};
+$.ajax({
+	url: '/server.json',
+})
+.then(getID('result_rows'))
+.then(getID('id'))
+							</code>
+						</pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h4>Functors, Applicatives, Monads, Arrows ...</h4>
+					</section>
+					<section>
+						<h5>Monad</h5>
+						<p>一种设计模式：程序控制流</p>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+list = [-1,0,1];
+list.map(inc); //= [0,1,2]
+list.map(isZero); //= [ture, false, true]
+							</code>
+						</pre>
+					</section>
+					<section>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+[x*2 | x<-[1..10], odd x]
+							</code>
+						</pre>
+						<pre class="fragment">
+							<code class="hljs" data-trim contenteditable>
+var x = [1, 2, 3,4,5,6,7,8,9,10];
+
+x.filter(function(item){
+	if(item%2 != 0) {
+		return item * 2;
+	}
+})
+							</code>
+						</pre>
+						<pre class="fragment">
+							<code class="hljs" data-trim contenteditable>
+const fetchAPI = () => {
+	 let req = SendRequest(url);
+	 let rsp = req.GetResponse();
+}
+							</code>
+						</pre>
+						<p class="fragment">bind: =></p>
+					</section>
+					<section>
+						<h5>Arrow: es6箭头函数</h5>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+const square = (x) => Math.square(x);
+const func = (fn) => (x) => fn(x);
+							</code>
+						</pre>
+						<p class="fragment">no ｀this｀</p>
+						<p class="fragment">one argumnet, return value or function</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h4>Referential Transparency: 引用透明</h5>
+					</section>
+					<section>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+//ex: 1
+{} == {} //= false
+[] == [] //= false
+
+//ex: 2
+var a = {};
+var b = a;
+b == a //= true
+b.f = 'f';
+b == a //= true b:{f: 'f'} a:{f: 'f'}
+							</code>
+						</pre>
+						<p class="fragment">深对比</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h4>Immutable Data: 数据不可变</h4>
+					</section>
+					<section>
+						<ol>
+							<li>链表数据结构共享</li>
+							<li>不允许不改变引用而修改变量</li>
+						</ol>
+						<div>
+							<img src="./pics/table.png" alt="链表">
+						</div>
+					</section>
+					<section>
+						<h5>组件设计</h5>
+						<pre class="fragment">
+							<code class="hljs" data-trim contenteditable>
+<todolist list={list}>
+	<item>{list_item}</item>
+	<item>{list_item}</item>
+</todolist>
+							</code>
+						</pre>
+						<p class="fragment">reactJs: props and stats</p>
+						<a href="http://facebook.github.io/immutable-js/" class="fragment">facebook immutable.js</a>
+					</section>
+				</section>
+
+				<section>
+					<h4>in a word</h4>
+					<ol>
+						<li class="fragment zoom">no more `this`</li>
+						<li class="fragment zoom">side-effect free</li>
+						<li class="fragment zoom">function with one argument</li>
+						<li class="fragment zoom">use arrow, not ｀function｀</li>
+						<li class="fragment zoom">use const, not let、var</li>
+					</ol>
+				</section>
+
+				<section data-background="./pics/1.jpg" data-transition="zoom">
+					<div style="background-color: rgba(0, 0, 0, 0.6); color: #fff; padding: 20px;">
+						<h4>the end</h4>
+						<blockquote>
+						   	My secret is to share. --author of VueJs
+						</blockquote>
+						<p class="fragment">thanks for your attention～👀 </p>
+					</div>
+					<!-- <img src="./pics/1.jpg" alt="" width="420px"> -->
+				</section>
+			</div>
+		</div>
+
+
+		<script src="../revealjs/lib/js/head.min.js"></script>
+		<script src="../revealjs/js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: '../revealjs/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../revealjs/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../revealjs/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../revealjs/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../revealjs/plugin/zoom-js/zoom.js', async: true },
+					{ src: '../revealjs/plugin/notes/notes.js', async: true }
+				],
+				parallaxBackgroundImage: './pics/test.jpg', // e.g. "https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg"
+
+			    // Parallax background size
+			    parallaxBackgroundSize: '1920px 1080px', // CSS syntax, e.g. "2100px 900px" - currently only pixels are supported (don't use % or auto)
+
+			    // Number of pixels to move the parallax background per slide
+			    // - Calculated automatically unless specified
+			    // - Set to 0 to disable movement along an axis
+			    parallaxBackgroundHorizontal: 200,
+			    parallaxBackgroundVertical: 50
+			});
+
+		</script>
+
+	</body>
+</html>
