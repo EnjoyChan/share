@@ -478,10 +478,25 @@ for the usage example
 				</section>
 
 				<section>
+					<h4>webuild工作流问题</h4>
+					<section>
+						<ul>
+							<li>业务工程必须和weui.oa工程同级</li>
+							<li>构建业务工程使用node 4+ 且 不要 >= 6.0 and <= 6.1</li>
+							<li>weui.oa工程前端和重构公用一个package.json</li>
+							<li>windows下会出现第一次构建缓慢问题</li>
+							<li>使用cnpm、npm安装依赖包，会出现can't find module等问题，尝试使用yarn</li>
+							<li>开发的过程发现构建不对，看终端log</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
 					<h4>Next</h4>
 					<ul>
 						<li>提炼共性：读取package.json</li>
-						<li>代码重构：node升级、webpack升级、error catch等</li>
+						<li>配置文件优化</li>
+						<li>代码重构：node升级、webpack升级、error catch、代码设计等</li>
 						<li>文件自动添加到对应的php文件中</li>
 						<li>使用git log</li>
 						<li>......</li>
