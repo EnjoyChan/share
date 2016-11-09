@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>webuild</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../revealjs/css/reveal.css">
+		<link rel="stylesheet" href="../revealjs/css/theme/serif.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../revealjs/lib/css/zenburn.css">
+		<style media="screen">
+			pre {
+				background-color: #fff;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<!--  page 1-->
+				<section>
+					<h3>webuild</h3>
+					<h4>build everything we want</h4>
+					<p>
+						Enjoy Chan(平台产品前端)
+					</p>
+				</section>
+
+				<section>
+					<h4>目录</h4>
+					<ul>
+						<li>webuild的产生</li>
+						<li>webuild各站点构建</li>
+						<li>webuild命令行使用</li>
+						<li>webuild开发</li>
+						<li>webuild总结</li>
+					</ul>
+				</section>
+
+				<section>
+					<h4>schema</h4>
+					<section>
+						<h4>站点</h4>
+						<ul style="display: block">
+							<li style="font-size: 20px;"><span style="font-size: 22px"><b>weui.oa:</b></span> 公共站点，存放html、css、image，存放vue组件、libs、modules</li>
+							<li style="font-size: 20px;"><span style="font-size: 22px"><b>rc.oa:</b></span> 代表业务站点，存放业务相关js</li>
+						</ul>
+						<pre style="width: auto; display: inline-block">
+	  <span style="font-size: 22px; font-weight: bold">weui.oa</span>
+	    |
+	    |---- <b>htdocs (站点访问指向)</b>
+	    |
+	    |---- src (前端)
+	    |
+	    |---- template (重构)
+						</pre>
+						<pre style="width: auto; display: inline-block">
+	 <span style="font-size: 22px; font-weight: bold">rc.oa</span>
+	    |
+	    |---- <b>htdocs (站点访问指向)</b>
+	    |
+	    |---- src (php文件)
+	    |
+	    |---- resource (业务js)
+						</pre>
+					</section>
+					<section>
+						<pre>
+    <span style="font-size: 22px; font-weight: bold">weui.oa/src</span>
+	|
+	|---- libs (公共库文件,ex: vue.js、vue-resource.js)
+	|
+	|---- modules (公用js功能模块)
+	|
+	|---- ui (公用vue组件)
+						</pre>
+					</section>
+					<section>
+						<p>
+							weui.oa/src vs weui.oa/htdocs
+						</p>
+						<img src="./imgs/1.png" alt="" style="width: 280px">
+						<img src="./imgs/2.png" alt="" style="width: 280px">
+					</section>
+					<section>
+						<p>
+							版本、构建信息 package.json
+						</p>
+						<img src="./imgs/3.png" alt="" width="300px"/>
+					</section>
+					<section>
+						<p>
+							weui.js
+						</p>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+//weui.js
+import Vue from 'vue'
+import VueResource from 'vue-resource'
+
+export default {
+	Vue: Vue,
+	VueResource: VueResource
+}
+
+//业务js
+import {Vue, VueResource} from 'weui/libs/desktop/weui'
+
+							</code>
+						</pre>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+//weui.js, 文件合并
+[vue, vue-resource]
+
+//业务js
+import Vue from 'vue'
+import VueResource from 'vue-resource'
+
+							</code>
+						</pre>
+						<p style="font-size: 22px" class="fragment">
+							bundle、concate
+						</p>
+					</section>
+					<section>
+						<p>
+							业务js示例
+						</p>
+						<pre>
+							<code>
+import Vue from 'vue';//weui.oa/htdocs/libs
+import VueMaskLayer from 'UI/desktop/vue-mask-layer/1.0.0';//weui.oa/htdocs/ui
+import VueWidget from './src/widget.vue';//自定义组件
+
+var app = new Vue({
+    el: '#app',
+    data: {
+        isMaskShow: false
+    },
+    components: { VueWidget, VueMaskLayer}
+});
+							</code>
+						</pre>
+						<p style="font-size: 22px" class="fragment">
+							bundle
+						</p>
+					</section>
+					<section>
+						<p>
+							功能点
+						</p>
+						<ul>
+							<li><b>copy： </b>文件复制</li>
+							<li><b>concate： </b>文件合并</li>
+							<li><b>bundle： </b>文件打包</li>
+							<li><b>ui: </b>调试开发组件、demo生成</li>
+							<li><b>package: </b>版本信息 package.json</li>
+						</ul>
+					</section>
+					<section>
+						<img src="./imgs/4.png" alt="" style="border: none"/>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h4>webuild package</h4>
+						<p>
+							根据package.json执行concate、copy、bundle操作
+						</p>
+					</section>
+					<section>
+						<pre style="width: 400px; margin: 0 auto">
+	  <span style="font-size: 22px; font-weight: bold">weui.oa</span>
+	    |
+	    |---- htdocs
+	    |
+	    |---- src
+	    |
+	    |---- template
+						</pre>
+					</section>
+					<section>
+						<img src="./imgs/5.png" alt="" />
+					</section>
+					<section>
+						<h5>weui/src</h5>
+						<img src="./imgs/6.png" alt="" style="width: 620px">
+					</section>
+					<section>
+						<h5>weui/src</h5>
+						<img src="./imgs/7.png" alt="" />
+					</section>
+					<section>
+						<h4>package.json - concat</h4>
+						<pre>
+							<code style="font-size: 18px">
+{
+	"type": "concat",
+	"output": [
+		{
+			"version": "1.0.0",
+			"name": "vue-libs",
+			"entry": ["vue.js", "vue-http.js"]
+		},
+		{
+			"version": "1.0.1",
+			"name": "vue-lib2-v2",
+			"entry": ["vue.js", "vue-http.js"]
+		}
+	]
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>package.json - copy</h4>
+						<pre>
+							<code style="font-size: 18px">
+{
+    "type": "copy",
+    "output": [
+        {
+            "version": "1.0.0"
+        }
+    ]
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>package.json - bundle</h4>
+						<pre>
+							<code style="font-size: 18px">
+{
+    "type": "bundle",
+    "output": [
+        {
+            "version": "1.0.1",
+            "entry": "weui.js"
+        }
+    ]
+}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h4>weui.oa/template</h4>
+						<img src="./imgs/8.png" alt="" />
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h4>webuild ui</h4>
+						<p>
+							搭建vue component开发的环境以及生成demo
+						</p>
+					</section>
+					<section>
+						<img src="./imgs/9.png" alt="" />
+					</section>
+					<section>
+						<p>
+							webuild ui执行内容
+						</p>
+						<ul>
+							<li>demo文件是否存在，是则忽略第二步</li>
+							<li>新建demo/index.html、demo/index.js文件</li>
+							<li>开启webpack-dev-server, 监听指定端口</li>
+						</ul>
+					</section>
+					<section>
+						<p>
+							模板
+						</p>
+						<img src="./imgs/10.png" alt="" />
+						<img src="./imgs/11.png" alt="" />
+					</section>
+					<section>
+						<p>
+							vue组件
+						</p>
+						<pre>
+							<code data-trim contenteditable>
+<template>
+	<div></div>
+</template>
+
+<script>
+	export default {
+
+	}
+</script>
+
+//- path error
+<style src="./theme/style.css">
+</style>
+							</code>
+						</pre>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h4>webuild bundle</h4>
+						<p>
+							查找入口js并使用webpack打包
+						</p>
+					</section>
+					<section>
+						<pre style="width: 400px; margin: 0 auto">
+	  <span style="font-size: 22px; font-weight: bold">rc.oa</span>
+	    |
+	    |---- htdocs
+	    |
+	    |---- src
+	    |
+	    |---- resource
+						</pre>
+					</section>
+					<section>
+						<img src="./imgs/12.png" alt="" />
+					</section>
+					<section>
+						<p>
+							业务入口js
+						</p>
+						<pre>
+							<code style="font-size: 15px;">
+import Vue from 'vue';//- libs
+import Toast from 'UI/desktop/vue-toast/1.0.0';//- weui.oa/htdocs/ui
+import VueMaskLayer from 'UI/desktop/vue-mask-layer/1.0.0'; //- weui.oa/htdocs/ui
+import VueMaskLayer from 'Modules/url/1.0.0'; //- weui.oa/htdocs/modules
+import VueWidget from './src/widget.vue';//- rc.oa
+
+var app = new Vue({
+    el: '#app',
+    data: {
+        btn: '点我提示',
+        isMaskShow: false
+    },
+    components: { VueWidget, VueMaskLayer},
+    methods: {
+        showMsg() {
+            this.isMaskShow = true;
+            this.toast.$error('提示信息1');
+        },
+        showAnotherMsg() {
+            var a = this.toast.$loading('提示信息2');
+            var This = this;
+            setTimeout(() => {
+                This.toast.$hideMessage(a);
+            }, 3000);
+        }
+    }
+});
+							</code>
+						</pre>
+					</section>
+					<section>
+						<p>
+							页面引用路径
+						</p>
+						<pre>
+							<code style="font-size: 15px;">
+//- 静态资源
+<link rel="stylesheet" href="//weui.oa.com/css/rc-oa/order/list.css">
+
+//- vue component style, by extract-css loader
+<link rel="stylesheet" href="/res/static/order/index.css">
+
+//- image path rule
+<img src="//weui.oa.com/img/rc-oa/order/list.jpg">
+
+//- weui.oa assets, begin with `//weui.oa`
+<script src="//weui.oa.com/libs/desktop/1.0.1/weui.js"></script>
+
+//- current project assets, begin with `/res/**`
+<script src="/res/static/order/index.js"></script>
+							</code>
+						</pre>
+						<p class="fragment">
+							* 不要使用node v6.1.0
+						</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h4>webuild 静态资源路径添加版本号</h4>
+					</section>
+
+					<section>
+						<pre>
+							<code>
+	//- before
+	body {
+		background-img: url('//weui.oa.com/img/list.png')
+	}
+
+	//- after
+	body {
+		background-img: url('//weui.oa.com/img/list.png?v=hd234')
+	}
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<img src="./imgs/13.png" alt="" />
+						<p>
+							server: htdocs 、template
+						</p>
+						<p>
+							gulp require webuild
+						</p>
+					</section>
+				</section>
+				<section>
+					<h4>webuild usage</h4>
+					<section>
+						<img src="./imgs/14.png" alt="" />
+						<p class="fragment">command: package、bundle、ui</p>
+					</section>
+					<section>
+						<p>
+							示例
+						</p>
+						<ul>
+							<li>webuild package</li>
+							<li>webuild package modules/url</li>
+							<li>webuild bundle</li>
+							<li>webuild bundle res/static/order/list -d</li>
+							<li>webuild ui desktop/vue-mask-layer -s</li>
+						</ul>
+					</section>
+					<section>
+						<p>
+							webuild.config.js
+						</p>
+						<img src="./imgs/15.png" alt="" />
+						<img src="./imgs/16.png" alt="" />
+						<img src="./imgs/17.png" alt="" />
+					</section>
+				</section>
+				<section>
+					<h4>webuild开发</h4>
+					<section>
+						<ul>
+							<li>要求node版本超过4</li>
+							<li>既做命令也做API</li>
+							<li>依赖webpack</li>
+							<li>使用co控制流程</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<h4>Next</h4>
+					<ul>
+						<li>提炼共性</li>
+						<li>代码重构</li>
+						<li>使用git log</li>
+						<li>......</li>
+					</ul>
+				</section>
+
+				<section data-background="./pics/1.jpg" data-transition="zoom">
+					<div style="background-color: rgba(0, 0, 0, 0.6); color: #fff; padding: 20px;">
+						<h4>the end</h4>
+						<blockquote>
+
+						</blockquote>
+						<p class="fragment">thanks for your attention～👀 </p>
+					</div>
+					<!-- <img src="./pics/1.jpg" alt="" width="420px"> -->
+				</section>
+			</div>
+		</div>
+		<script src="../revealjs/lib/js/head.min.js"></script>
+		<script src="../revealjs/js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: '../revealjs/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../revealjs/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../revealjs/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../revealjs/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../revealjs/plugin/zoom-js/zoom.js', async: true },
+					{ src: '../revealjs/plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
