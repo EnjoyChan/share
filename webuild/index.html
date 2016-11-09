@@ -259,10 +259,6 @@ var app = new Vue({
 							</code>
 						</pre>
 					</section>
-					<section>
-						<h4>weui.oa/template</h4>
-						<img src="./imgs/8.png" alt="" />
-					</section>
 				</section>
 
 				<section>
@@ -394,9 +390,15 @@ var app = new Vue({
 <script src="/res/static/order/index.js"></script>
 							</code>
 						</pre>
-						<p class="fragment">
-							* 不要使用node v6.1.0
+						<p class="fragment" style="font-size: 22px">
+							* 不要使用node >= 6.0 and <= 6.1
 						</p>
+						<pre class="fragment" style="color: red">
+Module build failed: Error: "extract-text-webpack-plugin" loader is used
+without the corresponding plugin, refer to
+https://github.com/webpack/extract-text-webpack-plugin
+for the usage example
+						</pre>
 					</section>
 				</section>
 				<section>
@@ -414,27 +416,32 @@ var app = new Vue({
 
 	//- after
 	body {
-		background-img: url('//weui.oa.com/img/list.png?v=hd234')
+		background-img: url('//weui.oa.com/img/list.png?v=b99a44d')
 	}
 							</code>
 						</pre>
+						<ul class="fragment">
+							<li>查找所有图片，并根据内容计算对应的MD5值取7位</li>
+							<li>遍历所有的css文件内容，查找图片路径引用并替换成带MD5值的路径</li>
+						</ul>
 					</section>
 
 					<section>
 						<img src="./imgs/13.png" alt="" />
-						<p>
-							server: htdocs 、template
-						</p>
-						<p>
-							gulp require webuild
-						</p>
+						<ul>
+							<li>开发模式，开启server、livereload, 根目录为htdocs、template</li>
+							<li>完整构建，引用webuild为css文件添加hash</li>
+							<li>处理引用路径问题</li>
+						</ul>
 					</section>
 				</section>
 				<section>
 					<h4>webuild usage</h4>
 					<section>
 						<img src="./imgs/14.png" alt="" />
-						<p class="fragment">command: package、bundle、ui</p>
+						<p>command: package、bundle、ui</p>
+						<p>options: dev、product、watch、server</p>
+						<p>port</p>
 					</section>
 					<section>
 						<p>
@@ -457,6 +464,7 @@ var app = new Vue({
 						<img src="./imgs/17.png" alt="" />
 					</section>
 				</section>
+
 				<section>
 					<h4>webuild开发</h4>
 					<section>
@@ -472,8 +480,9 @@ var app = new Vue({
 				<section>
 					<h4>Next</h4>
 					<ul>
-						<li>提炼共性</li>
-						<li>代码重构</li>
+						<li>提炼共性：读取package.json</li>
+						<li>代码重构：node升级、webpack升级、error catch等</li>
+						<li>文件自动添加到对应的php文件中</li>
 						<li>使用git log</li>
 						<li>......</li>
 					</ul>
@@ -483,7 +492,7 @@ var app = new Vue({
 					<div style="background-color: rgba(0, 0, 0, 0.6); color: #fff; padding: 20px;">
 						<h4>the end</h4>
 						<blockquote>
-
+							匠人
 						</blockquote>
 						<p class="fragment">thanks for your attention～👀 </p>
 					</div>

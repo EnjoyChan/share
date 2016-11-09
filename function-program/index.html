@@ -37,23 +37,22 @@
 				</section>
 
 				<section>
-					<h4>play a game</h4>
-				</section>
-
-				<section>
 					<section>
 						<h3>OOP：面向对象编程</h3>
 					</section>
 					<section>
 						<p>js面向对象编程</p>
-						<ol>
-							<li>构造函数</li>
-							<li>原型链</li>
-							<li>prototype</li>
-							<li>this</li>
-							<li>类、方法</li>
-							<li>new</li>
-						</ol>
+						<div style="background-color: rgba(255, 255, 255, .3); padding: 10px 0">
+							<ol>
+								<li>构造函数</li>
+								<li>原型链</li>
+								<li>prototype</li>
+								<li>this</li>
+								<li>属性、方法</li>
+								<li>class</li>
+								<li>new</li>
+							</ol>
+						</div>
 						<div class="fragment">see an example ⬇️</div>
 					</section>
 					<section>
@@ -141,12 +140,25 @@ $.fn.bark = function() {
 					</section>
 					<section>
 						<h4>常见 JS 函数库</h4>
-						<ol>
-							<li><a href="http://underscorejs.org">underscore.js</a></li>
-							<li><a href="https://lodash.com/">lodash.js</a></li>
-							<li><a href="http://">lazy.js</a></li>
-						</ol>
-
+						<div style="background-color: rgba(255, 255, 255, .3); padding: 10px 0">
+							<ol>
+								<li><a href="http://underscorejs.org">underscore.js</a></li>
+								<li><a href="https://lodash.com/">lodash.js</a></li>
+								<li><a href="http://danieltao.com/lazy.js/">lazy.js</a></li>
+							</ol>
+						</div>
+						<pre class="fragment">
+							<code class="hljs" data-trim contenteditable>
+//underscore.js lodash.js
+var data = [{name: 'enjoy chan', age: 17}, {name: 'coco cao', age: 17}];
+_.filter(_.pluck(data, 'name'), function(name) {
+	return name == 'enjoy chan';
+})
+//lazy.js
+data.pluck('name')
+    .filter(function(){})
+							</code>
+						</pre>
 					</section>
 					<section>
 						<h4><a href="https://en.wikipedia.org/wiki/Lambda_calculus">lambda calculus</a>: lambda 表达式</h4>
@@ -172,9 +184,9 @@ $.fn.bark = function() {
 							<code class="hljs" data-trim contenteditable>
 const x = 10;
 
-func1 = (a) => a + x;
+func1 = (a) => a + x;//not pure function
 
-func2 = (a) => a + 10;
+func2 = (a) => a + 10;//pure function
 							</code>
 						</pre>
 						<p class="fragment">纯函数：仅仅依赖于函数的输入，并且当输入相同时输出保持一致。</p>
@@ -185,6 +197,10 @@ func2 = (a) => a + 10;
 							<code class="hljs" data-trim contenteditable>
 var data = {},
     arr = [1, 2, 3];
+
+for(var i = 0; i < arr.length; i++) {
+	data[arr[i]] = arr[i]
+}
 
 //es5
 arr.forEach(function(item) {
@@ -197,6 +213,12 @@ _.each(arr, function() {
 })
 							</code>
 						</pre>
+						<div style="background-color: rgba(0, 0, 0, .5); padding: 10px 0">
+							<ul class="fragment">
+								<li>势必与外作用域耦合</li>
+								<li>迭代意图不明显</li>
+							</ul>
+						</div>
 					</section>
 					<section>
 						<p>Advantages</p>
@@ -254,6 +276,20 @@ pipe([getID('result_rows'), getID('id')]);
 const welcome = (name) => `welcome ${name}`;
 							</code>
 						</pre>
+						<pre class="fragment">
+							<code class="hljs" data-trim contenteditable>
+const mr = (name) => `Mr ${name}`;
+
+welcome(mr(name));
+
+//compose
+compose(welcome, mr);
+
+//pipe
+pipe([mr, welcome]);
+
+							</code>
+						</pre>
 					</section>
 				</section>
 
@@ -265,7 +301,7 @@ const welcome = (name) => `welcome ${name}`;
 						<p>js 函数调用</p>
 						<pre>
 							<code class="hljs" data-trim contenteditable>
-const add = (x, y) => return x + y;
+const add = (x, y) => x + y;
 add(1, 2); //= 3
 add(1); //= NaN
 add(1, 2, 3);//= 3
@@ -282,10 +318,12 @@ add(1)(2);//=3
 add(1, 2, 3);//=3
 							</code>
 						</pre>
-						<ul class="fragment">
-							<li>当参数个数少于函数既定参数个数时返回另一个function</li>
-							<li>当参数大于等于函数既定参数个数时直接执行function</li>
-						</ul>
+						<div style="background-color: rgba(0, 0, 0, .5); padding: 10px 0">
+							<ul class="fragment">
+								<li>当参数个数少于函数既定参数个数时返回另一个function</li>
+								<li>当参数大于等于函数既定参数个数时直接执行function</li>
+							</ul>
+						</div>
 					</section>
 					<section>
 						<h5>适用于map、compose 、pipe等</h5>
@@ -293,7 +331,7 @@ add(1, 2, 3);//=3
 						<pre class="fragment">
 							<code class="hljs" data-trim contenteditable>
 //返回数据的id
-const data = [{id: 1},{id: 2}, {id: 3}];
+const data = [{id: 1, sku: '1'},{id: 2, sku: '2'}, {id: 3, sku: '3'}];
 data.map((item) => item.id);//= [1, 2, 3]
 							</code>
 						</pre>
@@ -341,7 +379,7 @@ $.ajax({
 
 				<section>
 					<section>
-						<h4>Functors, Applicatives, Monads, Arrows ...</h4>
+						<h4>Monads, Arrows, Functors, Applicatives ...</h4>
 					</section>
 					<section>
 						<h5>Monad</h5>
@@ -364,10 +402,10 @@ list.map(isZero); //= [ture, false, true]
 							<code class="hljs" data-trim contenteditable>
 var x = [1, 2, 3,4,5,6,7,8,9,10];
 
-x.filter(function(item){
-	if(item%2 != 0) {
-		return item * 2;
-	}
+var result = x.filter(function(item){
+	return item % 2 != 0;
+}).map(function(item) {
+	return item * 2;
 })
 							</code>
 						</pre>
@@ -385,7 +423,10 @@ const fetchAPI = () => {
 						<h5>Arrow: es6箭头函数</h5>
 						<pre>
 							<code class="hljs" data-trim contenteditable>
-const square = (x) => Math.square(x);
+//return value
+const square = (x) => square(x);
+
+//return func
 const func = (fn) => (x) => fn(x);
 							</code>
 						</pre>
@@ -423,8 +464,8 @@ b == a //= true b:{f: 'f'} a:{f: 'f'}
 					</section>
 					<section>
 						<ol>
-							<li>链表数据结构共享</li>
 							<li>不允许不改变引用而修改变量</li>
+							<li>链表数据结构共享</li>
 						</ol>
 						<div>
 							<img src="./pics/table.png" alt="链表">
@@ -435,8 +476,8 @@ b == a //= true b:{f: 'f'} a:{f: 'f'}
 						<pre class="fragment">
 							<code class="hljs" data-trim contenteditable>
 <todolist list={list}>
-	<item>{list_item}</item>
-	<item>{list_item}</item>
+	<list-item>{list_item}</list-item>
+	<list-item>{list_item}</list-item>
 </todolist>
 							</code>
 						</pre>
