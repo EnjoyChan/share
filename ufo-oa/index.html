@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>framework-ufo-oa</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../revealjs/css/reveal.css">
+		<link rel="stylesheet" href="../revealjs/css/theme/serif.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../revealjs/lib/css/zenburn.css">
+		<style media="screen">
+			pre {
+				background-color: #fff;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<!--  page 1-->
+				<section>
+					<h3>ufo_oa</h3>
+					<p>
+						Enjoy Chan
+					</p>
+				</section>
+
+				<section>
+					<h4>技术选型</h4>
+					<p>webpack 1 + vue 2</p>
+				</section>
+
+				<section>
+					<h4>webpack</h4>
+					<section>
+						<ul>
+							<li>打包js模块</li>
+							<li>结合babel转译es6为es5</li>
+							<li>引用vue-loader编译vue单文件组件</li>
+						</ul>
+					</section>
+					<section>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+	//seaJs-CMD
+	seajs.use(['~vue@2'], function (Vue) {
+		var vm = new Vue({});
+	})
+
+	//commonJs
+	var Vue = require('vue');
+	var vm = new Vue({});
+
+	//es6 module
+	import Vue from 'vue';
+	var vm = new Vue({});
+
+							</code>
+						</pre>
+					</section>
+				</section>
+
+				<section>
+					<h4>vue</h4>
+					<ul>
+						<li>视图层，提供模板，支持render、jsx</li>
+						<li>单文件组件</li>
+					</ul>
+				</section>
+
+				<section>
+					<h4>vue实例</h4>
+					<pre>
+						<code class="hljs" data-trim contenteditable>
+var vm = new Vue({
+	el: '',
+	data: {
+
+	},
+	method: {
+		clickFunc: function(){}
+	}
+})
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h4>vue组件</h4>
+					<section>
+						<h5>组件也是vue实例</h5>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+	var vm = new Vue({
+		el: '',
+		data: {
+
+		},
+		method: {
+			clickFunc: function(){}
+		}
+	})
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h5>单文件组件+vue-loader</h5>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+	var vm = new Vue({
+		el: '',
+		data: {
+
+		},
+		method: {
+			clickFunc: function(){}
+		}
+	})
+							</code>
+						</pre>
+					</section>
+				</section>
+
+				<section>
+					<h4>vue-resource</h4>
+					<p>http请求返回promise</p>
+					<pre>
+						<code class="hljs" data-trim contenteditable>
+var vm = new Vue({
+	el: '',
+	data: {
+
+	},
+	method: {
+		clickFunc: function(){}
+	}
+})
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h4>ufo_oa工程</h4>
+					<p>文件结构</p>
+				</section>
+
+				<section data-background="./pics/1.jpg" data-transition="zoom">
+					<div style="background-color: rgba(0, 0, 0, 0.6); color: #fff; padding: 20px;">
+						<h4>the end</h4>
+						<blockquote>
+							匠人
+						</blockquote>
+						<p class="fragment">thanks for your attention～👀 </p>
+					</div>
+				</section>
+			</div>
+		</div>
+		<script src="../revealjs/lib/js/head.min.js"></script>
+		<script src="../revealjs/js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: '../revealjs/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../revealjs/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../revealjs/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../revealjs/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../revealjs/plugin/zoom-js/zoom.js', async: true },
+					{ src: '../revealjs/plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
