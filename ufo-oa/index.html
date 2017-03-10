@@ -49,7 +49,7 @@
 					<h4>webpack</h4>
 					<section>
 						<ul>
-							<li>打包js模块</li>
+							<li>代替seajs，打包js模块，支持AMD、commonJs、es6 module</li>
 							<li>结合babel转译es6为es5</li>
 							<li>引用vue-loader编译vue单文件组件</li>
 						</ul>
@@ -57,18 +57,18 @@
 					<section>
 						<pre>
 							<code class="hljs" data-trim contenteditable>
-	//seaJs-CMD
-	seajs.use(['~vue@2'], function (Vue) {
-		var vm = new Vue({});
-	})
-
-	//commonJs
-	var Vue = require('vue');
+//seaJs-CMD
+seajs.use(['~vue@2'], function (Vue) {
 	var vm = new Vue({});
+})
 
-	//es6 module
-	import Vue from 'vue';
-	var vm = new Vue({});
+//commonJs
+var Vue = require('vue');
+var vm = new Vue({});
+
+//es6 module
+import Vue from 'vue';
+var vm = new Vue({});
 
 							</code>
 						</pre>
@@ -78,32 +78,14 @@
 				<section>
 					<h4>vue</h4>
 					<ul>
-						<li>视图层，提供模板，支持render、jsx</li>
+						<li>视图层，自带模板，支持render、jsx渲染方式</li>
 						<li>单文件组件</li>
 					</ul>
 				</section>
 
 				<section>
 					<h4>vue实例</h4>
-					<pre>
-						<code class="hljs" data-trim contenteditable>
-var vm = new Vue({
-	el: '',
-	data: {
-
-	},
-	method: {
-		clickFunc: function(){}
-	}
-})
-						</code>
-					</pre>
-				</section>
-
-				<section>
-					<h4>vue组件</h4>
 					<section>
-						<h5>组件也是vue实例</h5>
 						<pre>
 							<code class="hljs" data-trim contenteditable>
 	var vm = new Vue({
@@ -119,18 +101,74 @@ var vm = new Vue({
 						</pre>
 					</section>
 					<section>
-						<h5>单文件组件+vue-loader</h5>
+						<h4>vue组件</h4>
 						<pre>
 							<code class="hljs" data-trim contenteditable>
-	var vm = new Vue({
-		el: '',
-		data: {
+Vue.component('my-component', {
+	 //选项
+	 template: '<div></div>'
+})
+							</code>
+						</pre>
+					</section>
 
+					<section>
+						<h5>单文件组件 .vue文件 + vue-loader</h5>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+<template>
+	<div class="style">
+		<a @click="clickHandler">{{text}}</a>
+	</div>
+</template>
+<script>
+	export default {
+		props:  {//父级数据，验证数据类型
+			parentText: {
+	            type: String,
+	            default: '测试'
+	        }
 		},
-		method: {
-			clickFunc: function(){}
+		data: {
+			text: this.parentText
+		},
+		methods: {
+			clickHandler() {
+				//excute func
+			}
 		}
-	})
+	}
+</script>
+<style scoped>
+//样式，支持作用域样式
+	.style {
+		color: gray;
+	}
+</style>
+							</code>
+						</pre>
+					</section>
+					<section>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+//- js
+import Component from 'component';
+new Vue({
+	el: '#root'
+	data: {},
+	components: {
+		Component
+	}
+})
+
+//html || php
+<html>
+	<body>
+		<div id="root">
+			<component></component>
+		</div>
+	</body>
+</html>
 							</code>
 						</pre>
 					</section>
@@ -141,32 +179,36 @@ var vm = new Vue({
 					<p>http请求返回promise</p>
 					<pre>
 						<code class="hljs" data-trim contenteditable>
-var vm = new Vue({
-	el: '',
-	data: {
+// GET /someUrl
+  this.$http.get('/someUrl').then(response => {
 
-	},
-	method: {
-		clickFunc: function(){}
-	}
-})
+    // get body data
+    this.someData = response.body;
+
+  }, response => {
+    // error callback
+  });
 						</code>
 					</pre>
 				</section>
 
 				<section>
 					<h4>ufo_oa工程</h4>
-					<p>文件结构</p>
+					<section>
+						<p>文件组织结构</p>
+					</section>
+					<section>
+						<h5>构建</h5>
+						<ul>
+							<li>开发环境构建 - > npm run dev</li>
+							<li>生产环境构建 - > npm run build</li>
+						</ul>
+					</section>
 				</section>
 
 				<section data-background="./pics/1.jpg" data-transition="zoom">
-					<div style="background-color: rgba(0, 0, 0, 0.6); color: #fff; padding: 20px;">
-						<h4>the end</h4>
-						<blockquote>
-							匠人
-						</blockquote>
-						<p class="fragment">thanks for your attention～👀 </p>
-					</div>
+					<h4>the end</h4>
+					<p class="fragment">thanks for your attention～👀 </p>
 				</section>
 			</div>
 		</div>
